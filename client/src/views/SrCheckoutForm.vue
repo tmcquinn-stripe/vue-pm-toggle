@@ -79,6 +79,7 @@ const handleSubmit = async () => {
 
   paymentElement = elements?.create('payment');
   paymentElement?.mount("#payment-element");
+  isLoading.value = false;
 }
 </script>
 <template>
