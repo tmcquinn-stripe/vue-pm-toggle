@@ -19,13 +19,13 @@ onMounted(async () => {
   const { publishableKey } = await fetch("/api/config").then((res) => res.json());
   stripe = await loadStripe(publishableKey, {betas: ["elements_saved_payment_methods_beta_1", "elements_spm_sfu_off_session_override_beta_1"]});
 
-    
-  const{ clientSecret, error: backendError } = await getCustomerSessionClientSecret();
-
   const appearance:Appearance = {
     theme: 'stripe'
   }
   currentPM = "card";
+
+  //console.log(await getCustomerSessionClientSecret())
+
 
   elementOptions = {
     appearance: appearance,
@@ -36,13 +36,13 @@ onMounted(async () => {
     paymentMethodTypes: [currentPM],
     loader: 'never',
     // @ts-ignore - customerSessionClientSecret not in public docs
-    customerSessionClientSecret: clientSecret
+    customerSessionClientSecret: await getCustomerSessionClientSecret()
   }
   
-  if (backendError) {
+ /* if (backendError) {
     messages.value.push(backendError.message);
-  }
-  messages.value.push(`Client secret returned.`);
+  } */
+  messages.value.push(`Client secret returned.` );
 
 let test:DefaultValuesOption
   elements = stripe?.elements(elementOptions);
