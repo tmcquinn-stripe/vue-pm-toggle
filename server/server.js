@@ -45,7 +45,7 @@ app.get('/create-customer-secret', async(req, res) => {
     const newCustomer = "cus_OMkNOarPLYQYcF"
   
     const params = new URLSearchParams();
-    params.append("customer", newCustomer.id);
+    params.append("customer", newCustomer);
   
     const customerSession = await fetch(
       "https://api.stripe.com/v1/customer_sessions",
