@@ -42,7 +42,7 @@ app.get('/create-customer-secret', async(req, res) => {
 
   console.log()
   try {
-    const newCustomer = await stripe.customers.create();
+    const newCustomer = "cus_OMkNOarPLYQYcF"
   
     const params = new URLSearchParams();
     params.append("customer", newCustomer.id);
