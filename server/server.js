@@ -4,31 +4,12 @@ const {resolve} = require('path');
 // Replace if using a different env file or config
 const env = require('dotenv').config({path: '.env'});
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2020-08-27',
-  appInfo: { // For sample support and debugging, not required for production:
-    name: "stripe-samples/accept-a-payment/payment-element",
-    version: "0.0.2",
-    url: "https://github.com/stripe-samples"
-  }
-});
 
-app.use(express.static(process.env.STATIC_DIR));
-app.use(
-  express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
-    verify: function (req, res, buf) {
-      if (req.originalUrl.startsWith('/webhook')) {
-        req.rawBody = buf.toString();
-      }
-    },
-  })
-);
 
-app.get('/', (req, res) => {
+
+app.get('/app', (req, res) => {
   const path = resolve(process.env.STATIC_DIR + '/index.html');
-  res.sendFile(path);
+  res.send(path);
 });
 
 app.get('/config', (req, res) => {
@@ -42,7 +23,7 @@ app.get('/create-customer-secret', async(req, res) => {
 
   console.log()
   try {
-    const newCustomer = "cus_OMkNOarPLYQYcF"
+    const newCustomer = "cus_OnfsMeUMkjhwb2"
   
     const params = new URLSearchParams();
     params.append("customer", newCustomer);
@@ -142,6 +123,7 @@ app.post('/webhook', async (req, res) => {
   }
   res.sendStatus(200);
 });
+
 
 app.listen(4242, () =>
   console.log(`Node server listening at http://localhost:4242`)

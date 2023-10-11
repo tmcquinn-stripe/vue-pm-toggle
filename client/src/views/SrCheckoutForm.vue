@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, Ref, App } from "vue";
+import { ref, onMounted, Ref, App, VueElement } from "vue";
 import { Appearance, DefaultValuesOption, PaymentIntentResult, Stripe, StripeElements, StripeElementsOptions, StripeElementsOptionsMode, StripePaymentElement, StripePaymentElementOptions, loadStripe } from "@stripe/stripe-js";
 
 import SrMessages from "./SrMessages.vue";
@@ -17,7 +17,7 @@ let currentPM:string;
 onMounted(async () => {
   isLoading.value = true
   const { publishableKey } = await fetch("/api/config").then((res) => res.json());
-  stripe = await loadStripe(publishableKey, {betas: ["elements_saved_payment_methods_beta_1", "elements_spm_sfu_off_session_override_beta_1"]});
+  stripe = await loadStripe(publishableKey, {betas: ["elements_saved_payment_methods_beta_1", "elements_spm_sfu_off_session_override_beta_1"], stripeAccount: 'acct_1LvLhPDrmzPFAfk8'});
 
   const appearance:Appearance = {
     theme: 'stripe'
